@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>random</title>
+</head>
+<body>
+<canvas id="canvas" width="500" height="500"></canvas>
+<script type="text/javascript">
+	let canvas = document.getElementById('canvas');
+	let ctx = canvas.getContext('2d');
+	let image = new Image();	
+	image.onload = () => {
+		setInterval(() => {
+		ctx.clearRect(0,0,canvas.width,canvas.height);
+		ctx.drawImage(image, 
+			Math.ceil(Math.random()*(canvas.width-50)), 
+			Math.ceil(Math.random()*(canvas.height-50)), 
+			50, 50);
+		}, 1500);
+	}
+	image.src = 'img.png';
+</script>
+</body>
+</html>
