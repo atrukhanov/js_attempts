@@ -1,0 +1,17 @@
+{
+  "name": "node_simple_server",
+  "version": "0.0.1",
+  "description": "simple server",
+  "main": "server.js",
+  "dependencies": {
+    "xml2js": "^0.4.23",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
