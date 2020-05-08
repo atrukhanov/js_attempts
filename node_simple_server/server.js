@@ -1,24 +1,34 @@
 const express = require('express');
-const http = require('http');
-const xml2js = require('xml2js');
+const https = require('https');
+const cheerio = require("cheerio");
 
 const app = express();
 const port = 8081;
 
-app.get('/', (req, appRes) => {
-	http.get('http://www.cbr.ru/scripts/XML_daily.asp', httpRes => {
-		console.log(`Status: ${appRes.statusCode}`);
-		let str = '';
+const phLink = 'https://picsum.photos/200';
+const cbLink = 'https://www.cbr.ru/scripts/XML_daily.asp';
+const code = 'R01235';
+
+const getData = (link, callback) => {
+	https.get(link, httpRes => {
+		let data = '';
 		httpRes.on('data', chunk => {
-			str += chunk;
+			data += chunk;
 		});
 		httpRes.on('end', () => {
-			xml2js.parseString(str, (err, parseRes) => {
-				let code = parseRes.ValCurs.Valute[10].CharCode[0];
-				let value = parseRes.ValCurs.Valute[10].Value[0];
-				appRes.send(`1 ${code} = ${value}`);
-			});
+			callback(data);		
 		});
+	});
+}
+
+app.get('/', (req, appRes) => {
+	getData(cbLink, data => {
+		let $ = cheerio.load(data, {xmlMode: true});		
+		let node = $(`Valute[ID="${code}"]`);
+		val = `<div>1 ${node.find('CharCode').text()} = ${node.find('Value').text()}</div> 
+		<div><iframe src="${phLink}" scrolling="no" style="overflow:hidden; border:none;">
+		</iframe><div>`;	
+		appRes.send(val);	
 	});
 });
 
