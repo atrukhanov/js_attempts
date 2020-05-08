@@ -37,7 +37,7 @@ app.get('/', (req, appRes) => {
 					scrolling="no"
 					style=${styleIframe}>
 				</iframe>
-			<div>`;	
+			</div>`;	
 		appRes.send(val);	
 	});
 });
