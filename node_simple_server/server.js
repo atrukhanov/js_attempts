@@ -25,9 +25,19 @@ app.get('/', (req, appRes) => {
 	getData(cbLink, data => {
 		let $ = cheerio.load(data, {xmlMode: true});		
 		let node = $(`Valute[ID="${code}"]`);
-		val = `<div>1 ${node.find('CharCode').text()} = ${node.find('Value').text()}</div> 
-		<div><iframe src="${phLink}" scrolling="no" style="overflow:hidden; border:none;">
-		</iframe><div>`;	
+		let styleIframe = "overflow:hidden; border:none;";
+		let rootCurr = node.find('CharCode').text();
+		let convertCurr = node.find('Value').text();
+		val = `<div>
+			1 ${rootCurr} = ${converCurr}
+			</div> 
+			<div>
+				<iframe 
+					src="${phLink}" 
+					scrolling="no"
+					style=${styleIframe}>
+				</iframe>
+			<div>`;	
 		appRes.send(val);	
 	});
 });
