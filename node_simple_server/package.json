@@ -4,8 +4,9 @@
   "description": "simple server",
   "main": "server.js",
   "dependencies": {
-    "xml2js": "^0.4.23",
-    "express": "^4.17.1"
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {},
   "scripts": {

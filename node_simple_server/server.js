@@ -10,13 +10,16 @@ const cbLink = 'https://www.cbr.ru/scripts/XML_daily.asp';
 const code = 'R01235';
 
 const getData = (link, callback) => {
-	https.get(link, httpRes => {
+	https.get(link, httpsRes => {
 		let data = '';
-		httpRes.on('data', chunk => {
+		httpsRes.on('data', chunk => {
 			data += chunk;
 		});
-		httpRes.on('end', () => {
-			callback(data);		
+		httpsRes.on('error',err => {
+			console.log(err);
+		});
+		httpsRes.on('end', () => {
+			callback(data);
 		});
 	});
 }
@@ -44,6 +47,6 @@ app.get('/', (req, appRes) => {
 
 let server = app.listen(port, () => {
 	let host = server.address().address;
-	let port = server.address().port;  
+	let port = server.address().port;
 	console.log(`Example app listening at ${host} ${port}`);
 });
