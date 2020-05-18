@@ -32,7 +32,7 @@ app.get('/', (req, appRes) => {
 		let rootCurr = node.find('CharCode').text();
 		let convertCurr = node.find('Value').text();
 		val = `<div>
-			1 ${rootCurr} = ${converCurr}
+			1 ${rootCurr} = ${convertCurr}
 			</div> 
 			<div>
 				<iframe 
