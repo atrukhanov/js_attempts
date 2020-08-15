@@ -12,6 +12,10 @@ let SOCKETS = new Map();
 app.use(cookieParser());
 app.use(express.static('frontend'));
 
+const validateUsername = (id) => (
+	id ? id : `chatter${Math.round(Math.random() * 1000)}`
+)
+
 app.get('/login', (req, res) => {
 	if (req.query.name) {
 		let id = uuid.v4();
@@ -38,11 +42,12 @@ server.on('upgrade', (req, soc, head) => {
 
 wss.on('connection', (ws, req) => {
 	let id = cookie.split('=')[1];
+	let username = validateUsername(CLIENTS.get(id))
 	SOCKETS.set(id, ws);
 	ws.on('message', (data) => {
 		wss.clients.forEach((client) => {
 			if (client.readyState === WebSocket.OPEN) {
-				client.send(CLIENTS.get(id) + ': ' + data);
+				client.send(username + ': ' + data);
 			}
 		});
 	});
